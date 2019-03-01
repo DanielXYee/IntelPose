@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifit.demo.mapper.VideoMapper">
+    <resultMap id="tab_video" type="com.ifit.demo.entity.Video">
+        <result property="id" column="id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="intro" column="intro"/>
+        <result property="name" column="name"/>
+        <result property="path" column="path"/>
+        <result property="poseFileName" column="pose_file_name"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Long" resultMap="tab_video">
+        SELECT id,course_id,intro,name,path,pose_file_name
+        FROM video
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByCourseId" parameterType="Long" resultMap="tab_video">
+        select id,course_id,intro,name,path,pose_file_name
+        from video
+        where course_id=#{courseId}
+    </select>
+
+    <update id="updateById" parameterType="com.ifit.demo.entity.Video">
+        UPDATE video
+        SET course_id=#{courseId},intro=#{intro},name=#{name},path=#{path},pose_file_name=#{poseFileName}
+        WHERE id=#{id}
+    </update>
+
+    <insert id="insertVideo" parameterType="com.ifit.demo.entity.Video" useGeneratedKeys="true" keyProperty="id">
+        insert into video(course_id,intro,name, path, pose_file_name)
+        values (#{courseId},#{intro},#{name},#{path},#{poseFileName})
+    </insert>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM video
+        WHERE id=#{id}
+    </delete>
+</mapper>

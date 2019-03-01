@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifit.demo.mapper.TrainingHistoryMapper">
+    <resultMap id="tab_training_history" type="com.ifit.demo.entity.TrainingHistory">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="videoId" column="video_id"/>
+        <result property="duration" column="duration"/>
+        <result property="calorie" column="calorie"/>
+        <result property="score" column="score"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Long" resultMap="tab_training_history">
+        SELECT id,user_id,video_id,duration,calorie,score,status
+        FROM training_history
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByUserId" parameterType="Long" resultMap="tab_training_history">
+        select id,user_id,video_id,duration,calorie,score,status
+        from training_history
+        where user_id=#{userId}
+    </select>
+
+    <select id="findByUserIdAndStatus" resultMap="tab_training_history">
+        select id,user_id,video_id,duration,calorie,score,status
+        from training_history
+        where user_id=#{userId}
+          and status=#{status}
+    </select>
+
+    <update id="updateById" parameterType="com.ifit.demo.entity.TrainingHistory">
+        UPDATE training_history SET duration=#{duration},calorie=#{calorie},score=#{score},status=#{status}
+        WHERE id=#{id}
+    </update>
+
+    <insert id="insertTrainingHistory" parameterType="com.ifit.demo.entity.TrainingHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into training_history(user_id, video_id, duration, calorie, score,status)
+        values (#{userId},#{videoId},#{duration},#{calorie},#{score},#{status})
+    </insert>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM training_history
+        WHERE id=#{id}
+    </delete>
+</mapper>

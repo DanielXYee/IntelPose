@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifit.demo.mapper.CourseMapper">
+    <resultMap id="tab_course" type="com.ifit.demo.entity.Course">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="intro" column="intro"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Long" resultMap="tab_course">
+        SELECT id,name,type,intro
+        FROM course
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByType" parameterType="String" resultMap="tab_course">
+        select id,name,type,intro
+        from course
+        where type=#{type}
+    </select>
+
+    <select id="findAll" resultMap="tab_course">
+        select id,name,type,intro
+        from course
+    </select>
+
+    <update id="updateById" parameterType="com.ifit.demo.entity.Course">
+        UPDATE course SET name=#{name},type=#{type},intro=#{intro}
+        WHERE id=#{id}
+    </update>
+
+    <insert id="insertCourse" parameterType="com.ifit.demo.entity.Course" useGeneratedKeys="true" keyProperty="id">
+        insert into course(name, type, intro)
+        values #{name},#{type},#{intro})
+    </insert>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM course
+        WHERE id=#{id}
+    </delete>
+</mapper>
